@@ -1,0 +1,3 @@
+[submodule "vscode_zx"]
+	path = vscode_zx
+	url = https://github.com/kounch/vscode_zx

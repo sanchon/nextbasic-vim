@@ -1,6 +1,6 @@
 function! Test()
 
-	execute ('!dir')
+	execute ('!hdfmonkey')
 
 endfunction
 
