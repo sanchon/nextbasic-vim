@@ -4,6 +4,8 @@ vim plugin that helps with zx spectrum next basic development
 BackLog
 -------
 
+  
+  [x] Detect .bas files as nextbasic files
   [ ] Compile and run .bas files with CSpect and HDFMonkey
   [ ] Port language syntax to vim from VSCode and ZX Basic
 
