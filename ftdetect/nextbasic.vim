@@ -1,1 +1,1 @@
-au BufNewFile,BufRead *.bas set filetype=nextbasic
+au BufNewFile,BufRead *.txtbas set filetype=nextbasic

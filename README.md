@@ -1,14 +1,18 @@
-# nextbasic-vim
+nextbasic-vim
+=============
+
 vim plugin that helps with zx spectrum next basic development
+
+Because vim cannot edit tokenized .bas files I've decided that I'll use the .txtbas (plain text "bas" files) as the nextbasic file extension, when compiled
+they will be converted to .bas
 
 
 BackLog
 -------
-
   
   - [x] Detect .bas files as nextbasic files
   - [ ] Compile and run .bas files with CSpect and HDFMonkey
-    * [ ] Convert plain text bas (.txtbas) files into compiled (.bas) files with nextbasic2txt.py (by Kounch)
+    * [x] Convert plain text bas (.txtbas) files into compiled (.bas) files with nextbasic2txt.py (by Kounch)
     * [ ] Push files into disk image with hdfmonkey
   - [ ] Port language syntax to vim from VSCode and ZX Basic
 
