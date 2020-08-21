@@ -13,7 +13,8 @@ BackLog
   - [x] Detect .bas files as nextbasic files
   - [ ] Compile and run .bas files with CSpect and HDFMonkey
     * [x] Convert plain text bas (.txtbas) files into compiled (.bas) files with nextbasic2txt.py (by Kounch)
-    * [ ] Push files into disk image with hdfmonkey
+    * [x] Push files into disk image with hdfmonkey
+    * [ ] Refactor the code that calculates .bas file path, join Compile() and Deploy() functions
   - [ ] Port language syntax to vim from VSCode and ZX Basic
 
 

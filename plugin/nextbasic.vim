@@ -37,15 +37,55 @@ function! Compile()
 
 	" now we can substitute __BASFILE__ and __TXTBASFILE__ in the command
 	" line arguments
-	echo (g:nextbasic_txt2nextbasic_command_args)
 	let s:compile_command_args = substitute(g:nextbasic_txt2nextbasic_command_args, "BASFILE", escape(s:txtbasfile, '\ '), "")
-	echo (s:compile_command_args)
 	let s:compile_command_args = substitute(s:compile_command_args, "TXTBASFILE", escape(s:basfile, '\ '), "")
-	echo (s:compile_command_args)
 	let s:compile_command = g:nextbasic_txt2nextbasic_command . s:compile_command_args
-             
+        
+	" run command
+	let s:command_res = system (s:compile_command)
+	if (v:shell_error != 0)
+		throw("Error converting .txtbas to .bas: " . s:command_res)
+	endif
 
-	execute ("!".s:compile_command)
+endfunction
+
+
+
+
+" TODO remove this 
+let g:nextbasic_zxnextImg_file = 'C:\Users\hugo\Documents\Spectrum\devel\cspect-next-2gb\cspect-next-2gb.img'
+
+function! Deploy()
+
+	" if hdfmonkey is available in system path it just works, otherwise we
+	" need to know its path
+	if !exists("g:nextbasic_hdfmonkey_executable")
+		let g:nextbasic_hdfmonkey_executable = "hdfmonkey"
+	endif
+
+	" there is no sensible default for zxnext image file, so if there
+	" isn't one we have to fail
+	if !exists("g:nextbasic_zxnextImg_file")
+		throw("I don't know where the disk image is, please assign a value to g:nextbasic_zxnextImg_file")
+	endif
+
+	" create a 'devel' directory inside zxnext image
+	let s:deploy_command = g:nextbasic_hdfmonkey_executable . " mkdir " . g:nextbasic_zxnextImg_file . " devel"
+	let s:command_res = system (s:deploy_command)
+	if (v:shell_error != 0)
+		if stridx(s:command_res, "directory already exists") == 0
+			throw("Error creating devel directory in .img file: " . s:command_res)
+		else
+			"directory already exists, that's ok
+		endif
+	endif
+
+	" put file into 'devel' directory
+	let s:deploy_command = g:nextbasic_hdfmonkey_executable . " put " . g:nextbasic_zxnextImg_file . " " . s:basfile . " devel "
+	let s:command_res = system (s:deploy_command)
+	if (v:shell_error != 0)
+		throw("Error putting .bas file into .img file: " . s:command_res)
+	endif
 
 endfunction
 
