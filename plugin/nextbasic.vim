@@ -4,6 +4,31 @@ let s:nextbasicDir = expand('<sfile>:p:h:h')
 let s:nextbasicDirPlugin = expand('<sfile>:p:h')
 
 
+
+
+
+
+
+
+function s:txtbasFile()
+	return expand("%:p")
+endfunction
+
+function s:txtbasFileExtension()
+	return expand ("%:e")
+endfunction
+
+function s:basFile()
+	let l:txtbasfileNoExtension = expand("%:p:r")
+	return l:txtbasfileNoExtension . ".bas"
+endfunction
+
+
+
+
+
+
+
 " in this context "compile" means convert from plain text format to zx
 " spectrum tokenized .bas file
 function! Compile()
@@ -21,24 +46,16 @@ function! Compile()
 	endif
 
 	" the default command needs some command line arguments, we will use
-	" __BASFILE__ and __TXTBASFILE__ as place holders, so that the user
+	" __BASFILE__ and __TXTBASFILE__ as placeholders, so that the user
 	" can customize freely the command line arguments
 	if !exists("g:nextbasic_txt2nextbasic_command_args")
 		let g:nextbasic_txt2nextbasic_command_args = " -i BASFILE -o TXTBASFILE "
 	endif
-	" current file name, with full path
-	let s:txtbasfile = expand("%:p")
-	" current file name extension (should be .txtbas)
-	let s:txtbasfileExtension = expand("%:e")
-	" current file name without file extension but with full path
-	let s:txtbasfileNoExtension = expand("%:p:r")
-	" the compiled one will be bas
-	let s:basfile = s:txtbasfileNoExtension . ".bas"
 
 	" now we can substitute __BASFILE__ and __TXTBASFILE__ in the command
 	" line arguments
-	let s:compile_command_args = substitute(g:nextbasic_txt2nextbasic_command_args, "BASFILE", escape(s:txtbasfile, '\ '), "")
-	let s:compile_command_args = substitute(s:compile_command_args, "TXTBASFILE", escape(s:basfile, '\ '), "")
+	let s:compile_command_args = substitute(g:nextbasic_txt2nextbasic_command_args, "BASFILE", escape(s:txtbasFile(), '\ '), "")
+	let s:compile_command_args = substitute(s:compile_command_args, "TXTBASFILE", escape(s:basFile(), '\ '), "")
 	let s:compile_command = g:nextbasic_txt2nextbasic_command . s:compile_command_args
         
 	" run command
@@ -81,7 +98,7 @@ function! Deploy()
 	endif
 
 	" put file into 'devel' directory
-	let s:deploy_command = g:nextbasic_hdfmonkey_executable . " put " . g:nextbasic_zxnextImg_file . " " . s:basfile . " devel "
+	let s:deploy_command = g:nextbasic_hdfmonkey_executable . " put " . g:nextbasic_zxnextImg_file . " " . s:basFile() . " devel "
 	let s:command_res = system (s:deploy_command)
 	if (v:shell_error != 0)
 		throw("Error putting .bas file into .img file: " . s:command_res)
