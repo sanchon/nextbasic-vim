@@ -1,4 +1,4 @@
-10 print "this is the"
-20 print "best test program ever"
-
+10 PRINT "this is the"
+20 PRINT "best test program ever"
+30 STOP
 
